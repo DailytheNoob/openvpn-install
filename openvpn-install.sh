@@ -32,9 +32,9 @@ if readlink /proc/$$/exe | grep -q "dash"; then
 	exit
 fi
 
-if [[ "$EUID" -ne 0 ]]; then
-	echo "Sorry, you need to run this as root"
-	exit
+if [ $EUID != 0 ]; then
+    sudo "$0" "$@"
+    exit $?
 fi
 
 if [[ ! -e /dev/net/tun ]]; then
